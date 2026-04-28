@@ -194,10 +194,9 @@
     <div id="msg" class="msg"></div>
 </div>
 
-<script src="js/api.js"></script>
 <script>
     // 与原文件保持一致：接口、字段与流程不变
-    const API_BASE_URL = window.getTourismApiBase();
+    const API_BASE = 'http://localhost:8080';
     const $ = sel => document.querySelector(sel);
 
     const form = $('#regForm');
@@ -235,7 +234,7 @@
         btn.textContent = '正在提交…';
 
         try {
-            const resp = await fetch(`${API_BASE_URL}/user/register`, {
+            const resp = await fetch(`${API_BASE}/api/user/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email, password })
