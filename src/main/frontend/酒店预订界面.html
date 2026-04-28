@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>酒店预订 - 渝快游</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* 顶部固定导航 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            z-index: 1000;
+        }
+        nav a { display: inline-block; color: #fff; text-decoration: none; padding: 12px 14px; font-size: 15px; }
+        nav a:hover { background: #ddd; color: green; }
+        nav a.active { background: #4caf50; color: #fff; }
+
+        .sidebar h3 {
+            font-size: 18px;
+            right:100px;
+            margin-bottom: 15px;
+            color: #4caf50;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1660px;
+        }
+
+        .title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #4caf50;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .card a {
+            text-decoration: none;
+            color: white;
+            background-color: #4caf50;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .card a:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            margin-top: 30px;
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 30px 30px;
+        }
+
+        /* 按钮样式 */
+        .menu-toggle {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            position: fixed;
+            top: 20px;
+            left: 10px;
+            z-index: 1000;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* 侧边栏收起时 */
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+    </style>
+</head>
+<nav>
+    <a href="./主页.html">主页</a>
+    <a href="./热门景点界面.html">热门景点</a>
+    <a href="./推荐路线界面.html">推荐路线</a>
+    <a href="./酒店预订界面.html" class="active">酒店预订</a>
+    <a href="./美食推荐界面.html">美食推荐</a>
+</nav>
+
+<body>
+
+    <header style="margin-top:60px;">渝快游 - 酒店预订</header>
+
+    <div class="container">
+
+
+        <div class="grid" id="hotelsGrid">
+            <!-- 酒店列表将通过JavaScript动态加载 -->
+            <div class="loading" style="text-align: center; padding: 40px; grid-column: 1 / -1;">
+                <p>正在加载酒店信息...</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        渝快游 &copy;
+    </footer>
+
+    <!-- 引入 API 文件 -->
+    <script src="./js/api.js"></script>
+    <script>
+        // 顶部导航无需JS
+
+        // 页面加载时获取酒店数据
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await loadHotels();
+            } catch (error) {
+                console.error('加载酒店数据失败:', error);
+                document.getElementById('hotelsGrid').innerHTML = '<div class="error" style="text-align: center; padding: 40px; color: red; grid-column: 1 / -1;"><p>加载酒店数据失败，请刷新页面重试</p></div>';
+            }
+        });
+
+        // 加载酒店列表
+        async function loadHotels() {
+            try {
+                const response = await api.getHotels();
+                renderHotels(response.data);
+            } catch (error) {
+                console.error('获取酒店数据失败:', error);
+                throw error;
+            }
+        }
+
+        // 渲染酒店列表
+        function renderHotels(hotels) {
+            const hotelsGrid = document.getElementById('hotelsGrid');
+            
+            if (hotels.length === 0) {
+                hotelsGrid.innerHTML = '<div class="no-data" style="text-align: center; padding: 40px; grid-column: 1 / -1;"><p>暂无酒店信息</p></div>';
+                return;
+            }
+
+            hotelsGrid.innerHTML = hotels.map(hotel => `
+                <div class="card">
+                    <img src="${hotel.imageUrl || './pic/placeholder.jpg'}" alt="${hotel.name}" onerror="this.src='./pic/placeholder.jpg'">
+                    <h3>${hotel.name}</h3>
+                    <p>${hotel.description || '暂无描述'}</p>
+                    <p><strong>位置：</strong>${hotel.location || '未知'}</p>
+                    <p><strong>价格：</strong>¥${hotel.pricePerNight}/晚</p>
+                    <p><strong>评分：</strong>${hotel.rating || '暂无评分'}</p>
+                    ${hotel.amenities ? `<p><strong>设施：</strong>${hotel.amenities}</p>` : ''}
+                    <a href="预定成功.html" onclick="bookHotel(${hotel.id}, '${hotel.name}', ${hotel.pricePerNight})">预订房间</a>
+                </div>
+            `).join('');
+        }
+
+        // 预订酒店
+        function bookHotel(hotelId, hotelName, price) {
+            // 这里可以添加预订逻辑
+            console.log('预订酒店:', { hotelId, hotelName, price });
+        }
+    </script>
+
+</body>
+</html>

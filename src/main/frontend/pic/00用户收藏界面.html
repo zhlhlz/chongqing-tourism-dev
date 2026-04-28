@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的收藏 - 渝快游</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #ffffff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: fixed;
+            top: 70px; /* Offset to place below header */
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-250px);
+        }
+
+        .sidebar h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #4caf50;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .toggle-sidebar {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-sidebar:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            margin-left: 270px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .container.collapsed {
+            margin-left: 20px;
+        }
+
+        .title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .favorite-item {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 300px; /* 调整为固定宽度 */
+            height: 400px; /* 调整为固定高度 */
+            transition: transform 0.3s;
+        }
+
+        .favorite-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .favorite-item img {
+            width: 100%;
+            height: 200px; /* 调整图片高度 */
+            object-fit: cover;
+        }
+
+        .favorite-content {
+            padding: 20px;
+        }
+
+        .favorite-content h3 {
+            font-size: 15px;
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+
+        .favorite-content p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .favorite-content a {
+            text-decoration: none;
+            color: white;
+            background-color: #4caf50;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .favorite-content a:hover {
+            background-color: #45a049;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #555;
+            font-size: 16px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>渝快游 - 我的收藏</header>
+
+    <button class="toggle-sidebar" id="toggleButton" onclick="toggleSidebar()" style="margin-top: 15px;">收起菜单</button></button>
+
+    <div class="sidebar" id="sidebar" style="padding-top: 70px;">
+        <h3>分类导航</h3>
+        <ul>
+            <li><a href="#" class="active" onclick="filterCategory('景点')">旅游景点</a></li>
+            <li><a href="#" onclick="filterCategory('路线')">推荐路线</a></li>
+            <li><a href="#" onclick="filterCategory('酒店')">酒店预订</a></li>
+            <li><a href="#" onclick="filterCategory('美食')">美食推荐</a></li>
+        </ul>
+    </div>
+
+    <div class="container" id="container">
+        <div class="title">我的收藏</div>
+
+        <div class="favorites-grid" id="favoritesGrid">
+            <div class="favorite-item" data-category="景点">
+                <img src="解放碑.jpg" alt="收藏1">
+                <div class="favorite-content">
+                    <h3>解放碑</h3>
+                    <p>重庆著名的城市地标，融合了历史与现代的魅力。</p>
+                    <a href="/favorites/jiefangbei">查看详情</a>
+                </div>
+            </div>
+
+            <div class="favorite-item" data-category="路线">
+                <img src="洪崖洞.jpg" alt="收藏2">
+                <div class="favorite-content">
+                    <h3>经典一日游</h3>
+                    <p>从解放碑到洪崖洞，体验重庆精华景点。</p>
+                    <a href="/favorites/oneday">查看详情</a>
+                </div>
+            </div>
+
+            <div class="favorite-item" data-category="酒店">
+                <img src="威斯汀酒店.jpg" alt="收藏3">
+                <div class="favorite-content">
+                    <h3>重庆威斯汀酒店</h3>
+                    <p>豪华住宿和顶级服务，位于解放碑中心。</p>
+                    <a href="/favorites/westin">查看详情</a>
+                </div>
+            </div>
+
+            <div class="favorite-item" data-category="美食">
+                <img src="火锅.jpg" alt="收藏4">
+                <div class="favorite-content">
+                    <h3>重庆火锅</h3>
+                    <p>麻辣鲜香，重庆必尝美食。</p>
+                    <a href="/favorites/hotpot">查看详情</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="empty-message" id="emptyMessage" style="display: none;">当前分类没有收藏内容。</div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const container = document.getElementById('container');
+            const toggleButton = document.getElementById('toggleButton');
+
+            if (sidebar.classList.contains('collapsed')) {
+                sidebar.classList.remove('collapsed');
+                container.classList.remove('collapsed');
+                toggleButton.textContent = '收起菜单';
+            } else {
+                sidebar.classList.add('collapsed');
+                container.classList.add('collapsed');
+                toggleButton.textContent = '拉出菜单';
+            }
+        }
+
+        function filterCategory(category) {
+            const items = document.querySelectorAll('.favorite-item');
+            const emptyMessage = document.getElementById('emptyMessage');
+            let hasVisibleItems = false;
+
+            items.forEach(item => {
+                if (item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                    hasVisibleItems = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            emptyMessage.style.display = hasVisibleItems ? 'none' : 'block';
+
+            // 更新侧边栏选中状态
+            document.querySelectorAll('.sidebar ul li a').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`.sidebar ul li a[onclick="filterCategory('${category}')"]`).classList.add('active');
+        }
+
+        // 默认显示“旅游景点”分类
+        filterCategory('景点');
+    </script>
+</body>
+</html>

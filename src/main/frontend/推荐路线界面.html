@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>推荐路线 - 渝快游</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* 顶部固定导航 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            z-index: 1000;
+        }
+        nav a { display: inline-block; color: #fff; text-decoration: none; padding: 12px 14px; font-size: 15px; }
+        nav a:hover { background: #ddd; color: green; }
+        nav a.active { background: #4caf50; color: #fff; }
+
+        .sidebar h3 {
+            font-size: 18px;
+            right:100px;
+            margin-bottom: 15px;
+            color: #4caf50;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1660px;
+        }
+
+        .title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #4caf50;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .card a {
+            text-decoration: none;
+            color: white;
+            background-color: #4caf50;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .card a:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            margin-top: 30px;
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 30px 30px;
+        }
+
+        /* 按钮样式 */
+        .menu-toggle {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            position: fixed;
+            top: 20px;
+            left: 10px;
+            z-index: 1000;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* 侧边栏收起时 */
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+    </style>
+</head>
+<nav>
+    <a href="./主页.html">主页</a>
+    <a href="./热门景点界面.html">热门景点</a>
+    <a href="./推荐路线界面.html" class="active">推荐路线</a>
+    <a href="./酒店预订界面.html">酒店预订</a>
+    <a href="./美食推荐界面.html">美食推荐</a>
+    <a href="社区互动.html">社区互动</a>
+</nav>
+
+<body>
+<!-- 移除侧边栏，使用顶部导航 -->
+
+    <header style="margin-top:60px;">渝快游 - 推荐路线</header>
+
+    <div class="container">
+
+        <div class="grid">
+            <div class="card">
+                <img src='./pic/重庆.jpg' alt="路线1">
+                <h3>经典一日游</h3>
+                <p>从解放碑出发，游览洪崖洞、朝天门，再搭乘长江索道。</p>
+                <a href="/route/classic-one-day">了解更多</a>
+            </div>
+
+            <div class="card">
+                <img src="./pic/重庆小面.jpg" alt="路线2">
+                <h3>美食之旅</h3>
+                <p>品尝重庆火锅、小面、酸辣粉，探寻本地最地道的美食。</p>
+                <a href="/route/food-tour">了解更多</a>
+            </div>
+
+            <div class="card">
+                <img src="./pic/大足石刻2.jpg" alt="路线3">
+                <h3>文化探索</h3>
+                <p>参观大足石刻、磁器口古镇，感受重庆的历史与文化魅力。</p>
+                <a href="/route/cultural-tour">了解更多</a>
+            </div>
+
+            <div class="card">
+                <img src="./pic/南山植物园.jpg" alt="路线4">
+                <h3>自然风光</h3>
+                <p>游览南山植物园、缙云山国家自然保护区，亲近自然。</p>
+                <a href="/route/nature-tour">了解更多</a>
+            </div>
+
+            <div class="card">
+                <img src="./pic/重庆夜景.jpg" alt="路线5">
+                <h3>夜景之旅</h3>
+                <p>体验南山一棵树夜景、洪崖洞夜晚灯光秀，享受城市之夜。</p>
+                <a href="/route/night-tour">了解更多</a>
+            </div>
+
+            <div class="card">
+                <img src="./pic/温泉.jpg" alt="路线6">
+                <h3>温泉休闲</h3>
+                <p>放松身心，体验北碚温泉、南温泉的舒适与惬意。</p>
+                <a href="/route/spa-tour">了解更多</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        渝快游 &copy;
+    </footer>
+    <script>
+        // 顶部导航无需JS
+    </script>
+
+</body>
+</html>
