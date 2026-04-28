@@ -221,20 +221,25 @@
         async function addPost() {
             const title = document.getElementById('postTitle').value.trim();
             const content = document.getElementById('newPostContent').value.trim();
+            const currentUser = getCurrentUser();
             
             if (!title || !content) {
                 alert('标题和内容不能为空！');
                 return;
             }
 
+            if (!currentUser || !currentUser.id) {
+                alert('请先登录后再发布社区动态。');
+                window.location.href = '登录界面.html';
+                return;
+            }
+
             try {
                 const response = await fetch(`${API_BASE_URL}/community/posts`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: getAuthHeaders(),
                     body: JSON.stringify({
-                        userId: 1, // 使用测试用户ID 1
+                        userId: currentUser.id,
                         title: title,
                         content: content
                     })
@@ -252,6 +257,25 @@
                 console.error('发布帖子失败:', error);
                 alert('网络错误，请检查后端服务');
             }
+        }
+
+        function getCurrentUser() {
+            try {
+                return JSON.parse(localStorage.getItem('user') || 'null');
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function getAuthHeaders() {
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+            const token = localStorage.getItem('userToken');
+            if (token) {
+                headers.Authorization = `Bearer ${token}`;
+            }
+            return headers;
         }
 
         function likePost(button) {
