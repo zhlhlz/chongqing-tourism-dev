@@ -16,6 +16,41 @@
 5. 在功能分支修改 README 同一行，制造合并冲突。
 6. 合并功能分支到 main，手动保留双方信息并提交冲突解决结果。
 
+## 实际提交记录
+
+```text
+*   b753622 (HEAD -> main) merge: resolve project status conflict
+|\  
+| * c6be898 (feature/project-management-docs) docs: add project tracking and wiki materials
+* | d1eed89 docs: update main branch project status
+|/  
+* b905168 chore: initialize tourism management system
+```
+
+## 冲突说明
+
+冲突文件：`README.md`
+
+冲突位置：`## 开发状态` 下方同一行。
+
+主分支内容：
+
+```text
+开发状态：主分支已完成本地编译修复，准备关联 GitHub 远程仓库。
+```
+
+功能分支内容：
+
+```text
+开发状态：功能分支正在补充项目管理材料与 Wiki 文档。
+```
+
+最终解决结果：
+
+```text
+开发状态：已完成本地编译修复、项目管理材料与 Wiki 文档整理，准备关联 GitHub 远程仓库。
+```
+
 ## 截图建议
 
 实验报告中建议截图以下命令结果：
