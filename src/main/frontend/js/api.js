@@ -1,18 +1,8 @@
 // frontend/js/api.js
 (function (global) {
-    function resolveApiBase(baseURL) {
-        if (baseURL) {
-            return baseURL;
-        }
-        if (global.TOURISM_API_BASE) {
-            return global.TOURISM_API_BASE;
-        }
-        return 'http://localhost:8080/api';
-    }
-
     class API {
         constructor(baseURL) {
-            this.baseURL = resolveApiBase(baseURL);
+            this.baseURL = baseURL || 'http://localhost:8080/api';
         }
 
         async request(endpoint, options = {}) {
@@ -113,7 +103,6 @@
 
     // 保持向下兼容：全局可用 window.api
     global.api = new API();
-    global.getTourismApiBase = resolveApiBase;
     // 也暴露构造器，必要时可：new API('http://x.x.x.x:3000/api')
     global.API = API;
 })(window);
